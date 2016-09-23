@@ -2,15 +2,14 @@ library(rtracklayer)
 library(data.table)
 library(stringr)
 
-
-#	hg18 needs LiftOver and removal of NAs (it does not report nm of removed SNPs any more in the output of MJ program)
+#	hg18 needs LiftOver and removal of NAs (it does not report num of removed SNPs any more in the output of MJ program)
+# path needs to be changed to the folder with hg18 SS files
 
 # read in .chain file:
 chain <- import.chain('/groups/umcg-wijmenga/tmp04/umcg-uvosa/GWAS_datasets/chain_files/hg18ToHg19.over.chain')
 
 #	write out .log file for SNPs removed during LiftOver:
-
-write.table(NULL, '../hg18_LiftOver.log', sep = '\t', quote = F, row.names = F)
+write.table(NULL, '../log_files/hg18_LiftOver.log', sep = '\t', quote = F, row.names = F)
 
 #	LiftOver
 for (i in list.files()[str_detect(list.files(), '.*hg18.txt')]){
@@ -35,12 +34,11 @@ gr2$chr <- str_replace(gr2$seqnames, 'chr', '')
 output <- data.frame(chr = gr2$chr, position = gr2$start, allele1 = gr2$allele1, allele2 = gr2$allele2, effect_allele = gr2$effect_allele, Z_OR = gr2$Z_OR, P = gr2$P)
 
 #	change the path!!!
-write.table(output, paste('/groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/curated_files_QC_filters/hg18_hg19/', str_replace(i, 'hg18', 'hg18_hg19'), sep = ''), sep = '\t', quote = F, row.names = F)
+write.table(output, paste('/groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/filtered_SS_files/hg18_hg19/', str_replace(i, 'hg18', 'hg18_hg19'), sep = ''), sep = '\t', quote = F, row.names = F)
 
 nr_removed <- data.frame(file = i, initiaNrSNPs = nrow(dat), removedLiftOver = nrow(dat) - nrow(output))
-write.table(nr_removed, file = '../hg18_LiftOver.log', sep = '\t', quote = F, row.names = F, append = T, col.names=!file.exists("../hg18_LiftOver.log"))
+write.table(nr_removed, file = '../log_files/hg18_LiftOver.log', sep = '\t', quote = F, row.names = F, append = T, col.names=!file.exists("../log_files/hg18_LiftOver.log"))
 
 print(i)
 
 }
-
