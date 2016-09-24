@@ -33,7 +33,7 @@ The folder structure for summary statistics curation is as follows:
     |---hg18_hg19
         |---hg18 SS files after LiftOver
     |---hg_to_QC
-        |---all SS after GIANT standardization
+        |---all SS files after GIANT standardization
     |---SS_filtered_freeze
         |---PRS_SS_QC_filtered_[year/month/day].tar.gz
-```        
+```
