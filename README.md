@@ -1,7 +1,7 @@
 # GRS_scripts
 Scripts for processing, QC and analysis of GRS QTL
 
-The folder structure for summary statistics curation is as follows:
+The folder structure for summary statistic curation is as follows:
 
 ```
 |---filtered_SS_files
@@ -36,4 +36,4 @@ The folder structure for summary statistics curation is as follows:
         |---all SS after GIANT standardization
     |---SS_filtered_freeze
         |---PRS_SS_QC_filtered_[year/month/day].tar.gz
-```        
+```
