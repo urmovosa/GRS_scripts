@@ -4,12 +4,10 @@ library(stringr)
 library(dplyr)
 library(gridExtra)
 
-and1 <- fread('/Users/urmovosa/Documents/move_to_mac/trans_eQTL_meta_analysis/Genetic_risk_scores_GWAS/diagnostic_plots/summarizationLog_hg18.log', na.strings = 'NaN')
-and2 <- fread('/Users/urmovosa/Documents/move_to_mac/trans_eQTL_meta_analysis/Genetic_risk_scores_GWAS/diagnostic_plots/summarizationLog_hg19.log', na.strings = 'NaN')
-and3 <- fread('/Users/urmovosa/Documents/move_to_mac/trans_eQTL_meta_analysis/Genetic_risk_scores_GWAS/diagnostic_plots/summarizationLog_fixed.log', na.strings = 'NaN')
+# read in .log files
+and1 <- fread('/groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/filtered_SS_files/log_files/summarizationLog_hg18.log', na.strings = 'NaN')
+and2 <- fread('/groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/filtered_SS_files/log_files/summarizationLog_hg19.log', na.strings = 'NaN')
 and_a <- rbind(and1, and2)
-and_a <- and_a[!and_a$NameOfFile %in% and3$NameOfFile, ]
-and_a <- rbind(and_a, and3)
 
 and_a[is.na(and_a$AvPStatistic), ]$MinPStatistic <- 0
 and_a[is.na(and_a$AvPStatistic), ]$MaxPStatistic <- 0
@@ -26,12 +24,12 @@ for (j in 1:length(grupp)){
   
   and <- and_a[and_a$NameOfFile %in% as.character(unlist(grupp[j])), ]
   
-  and$NameOfFile <- str_replace(and$NameOfFile, '/groups/umcg-wijmenga/tmp04/umcg-uvosa/input_Marc_Jan/output_files//', '')
+  #and$NameOfFile <- str_replace(and$NameOfFile, '/groups/umcg-wijmenga/tmp04/umcg-uvosa/input_Marc_Jan/output_files//', '')
   and$NameOfFile <- str_replace(and$NameOfFile, '.txt', '')
   
   and <- and %>%
     rowwise() %>%
-    mutate(PercentageRemoved = sum(RemovedMissingGiant, RemovedAllelIssues, RemovedInvalidPosition, RemovedInvalidEffect)/TotalInputAssociations, 
+    mutate(PercentageRemoved = sum(RemovedMissingGiant, RemovedAllelIssues, RemovedInvalidPosition, RemovedInvalidEffect)/TotalInputAssociations * 100, 
            AssociationsRemaining = TotalInputAssociations - sum(RemovedMissingGiant, RemovedAllelIssues, RemovedInvalidPosition, RemovedInvalidEffect))
   
   andBar <- and[, c(1, 3, 4, 5, 6, 14)]
@@ -115,7 +113,7 @@ for (j in 1:length(grupp)){
 
   p_grid <- grid.arrange(p1, p2, p3, p5, ncol = 2, nrow = 2)
   
-  ggsave(p_grid, file = paste('/Users/urmovosa/Documents/move_to_mac/trans_eQTL_meta_analysis/Genetic_risk_scores_GWAS/QC/QC_', j, '.png', sep = ''), height = 15 + 15/3, width = 15)
+  ggsave(p_grid, file = paste('/groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/filtered_SS_files/QC_reports/SNPenrollment_QC_graphs/SNPQC_', j, '.tiff', sep = ''), height = 15 + 15/3, width = 15)
   
   
   print(paste(j))
