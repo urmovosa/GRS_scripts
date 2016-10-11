@@ -16,7 +16,8 @@ java -Xmx55g -Xms55g -jar /groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_fu
 -p 1 2>&1 | tee /groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/filtered_SS_files/log_files/fix_SNPName_hg18.txt
 
 # move statistics file to the log folder
-mv /groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/filtered_SS_files/hg_to_QC/summarizationLog.log /groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/filtered_SS_files/log_files/summarizationLog_hg18.log
+mv /groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/filtered_SS_files/hg_to_QC/summarizationLog.log \
+/groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/filtered_SS_files/log_files/summarizationLog_hg18.log
 
 # hg19
 java -Xmx55g -Xms55g -jar /groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/filtered_SS_files/tools/FixSnpNamesGWAS-1.0.4-SNAPSHOT-jar-with-dependencies.jar \
@@ -27,5 +28,18 @@ java -Xmx55g -Xms55g -jar /groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_fu
 -p 1 2>&1 | tee /groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/filtered_SS_files/log_files/fix_SNPName_hg19.txt
 
 # move statistics file to the log folder
-mv /groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/filtered_SS_files/hg_to_QC/summarizationLog.log /groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/filtered_SS_files/log_files/summarizationLog_hg19.log
+mv /groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/filtered_SS_files/hg_to_QC/summarizationLog.log \
+/groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/filtered_SS_files/log_files/summarizationLog_hg19.log
+
+## This is for some datasets added later
+# hg19
+java -Xmx55g -Xms55g -jar /groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/filtered_SS_files/tools/FixSnpNamesGWAS-1.0.4-SNAPSHOT-jar-with-dependencies.jar \
+-r /groups/umcg-wijmenga/tmp04/umcg-uvosa/temp_annotation_files/GiantStatistics_Filtered_on_Maf0.001_Indels_AmbigiousSnps.vars.gz \
+-a /groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/filtered_SS_files/annotation_files/SNP_synonyms_ENSEMBL75.txt.gz \
+-s /groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/filtered_SS_files/hg19_extra/ \
+-o /groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/filtered_SS_files/hg_to_QC_extra/ \
+-p 1 2>&1 | tee /groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/filtered_SS_files/log_files/fix_SNPName_extra.txt
+
+# move statistics file to the log folder
+mv /groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/filtered_SS_files/hg_to_QC_extra/summarizationLog.log /groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/filtered_SS_files/log_files/summarizationLog_extra.log
 

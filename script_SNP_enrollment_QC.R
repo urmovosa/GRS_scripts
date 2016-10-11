@@ -7,7 +7,9 @@ library(gridExtra)
 # read in .log files
 and1 <- fread('/groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/filtered_SS_files/log_files/summarizationLog_hg18.log', na.strings = 'NaN')
 and2 <- fread('/groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/filtered_SS_files/log_files/summarizationLog_hg19.log', na.strings = 'NaN')
-and_a <- rbind(and1, and2)
+and3 <- fread('/groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/filtered_SS_files/log_files/summarizationLog_hg19.log', na.strings = 'NaN')
+
+and_a <- rbind(and1, and2, and3)
 
 and_a[is.na(and_a$AvPStatistic), ]$MinPStatistic <- 0
 and_a[is.na(and_a$AvPStatistic), ]$MaxPStatistic <- 0
