@@ -2,12 +2,20 @@ module load Java
 
 #	in the P-value, lowest P-value first:
 #	two-step clumping 500 kB first and 10 MB later
-java -Xmx40g -Xms40g -jar /groups/umcg-wijmenga/tmp04/umcg-uvosa/genetic_risk_score_calculator_010/GeneticRiskScoreCalculator-0.1.0-SNAPSHOT/GeneticRiskScoreCalculator.jar \
--gi /groups/umcg-wijmenga/tmp02/projects/umcg-uvosa/Fehrmann_TriTyper/TriTyper/ \
+# HLA removal
+
+rootdir=/groups/umcg-wijmenga/tmp04/umcg-uvosa/GRS_calculation/
+ttdir=/groups/umcg-wijmenga/tmp02/projects/umcg-uvosa/Fehrmann_TriTyper/TriTyper/
+ssdir=/groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/filtered_SS_files/
+
+java -Xmx100g -Xms100g -jar /groups/umcg-wijmenga/tmp04/umcg-uvosa/genetic_risk_score_calculator_010/GeneticRiskScoreCalculator-0.1.2b-SNAPSHOT/GeneticRiskScoreCalculator.jar \
+-gi ${ttdir} \
 -gt TRITYPER \
--i /groups/umcg-wijmenga/tmp04/umcg-uvosa/curated_GWAS_full_summary_statistics/filtered_SS_files/SS_filtered_freeze/ \
--o /groups/umcg-wijmenga/tmp04/umcg-uvosa/genetic_risk_scores_calculated/Fehrmann_HT12v3_20161002 \
--p 5e-8:1e-5:1e-4:1e-3 \
+-i ${ssdir} \
+-o ${rootdir}output \
+-p 5e-8:1e-5:1e-4:1e-3:5e-3 \
 -r 0.1 \
--w 250000:5000000
+-w 250000:5000000 \
+-er 6:25000000-35000000 \
+2>&1 | tee ${rootdir}/calculate_grs_5_thresholds_v012b.log
 
